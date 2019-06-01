@@ -86,7 +86,7 @@ public class PlayFabLogin : MonoBehaviour
 
     private void OnLoginFailure(PlayFabError error)
     {
-        Debug.LogWarning("Something went wrong with log in.  :(");
+        Debug.LogWarning("Something went wrong.  :(");
         Debug.LogError("Here's some debug information:");
         Debug.LogError(error.GenerateErrorReport());
     }
@@ -126,6 +126,8 @@ public class PlayFabLogin : MonoBehaviour
         PlayerPrefs.SetString("EMAIL", userEmail);
         PlayerPrefs.SetString("PASSWORD", userPassword);
 
+        UpdateUserDisplayName();
+
         loginPanel.SetActive(false);
     }
 
@@ -141,6 +143,8 @@ public class PlayFabLogin : MonoBehaviour
     {
         var addRecoveryRequest = new AddUsernamePasswordRequest { Email = userEmail, Password = userPassword, Username = username };
         PlayFabClientAPI.AddUsernamePassword(addRecoveryRequest, OnRegisterSuccess, OnRegisterFailure);
+
+        UpdateUserDisplayName();
     }
 
     private void OnRegisterSuccess(AddUsernamePasswordResult result)
@@ -150,5 +154,19 @@ public class PlayFabLogin : MonoBehaviour
         PlayerPrefs.SetString("PASSWORD", userPassword);
 
         loginPanel.SetActive(false);
+    }
+
+    public void UpdateUserDisplayName()
+    {
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = username },
+            onDisplayName => { Debug.Log("your display name is now: " + username); },
+            OnLoginFailure);
+    }
+
+    public void UpdateUserDisplayName(string username)
+    {
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = username },
+            onDisplayName => { Debug.Log("your display name is now: " + username); },
+            OnLoginFailure);
     }
 }
