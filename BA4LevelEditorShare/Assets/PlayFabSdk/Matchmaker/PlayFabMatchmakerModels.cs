@@ -33,16 +33,16 @@ namespace PlayFab.MatchmakerModels
     }
 
     /// <summary>
-    /// A unique instance of an item in a user's inventory. Note, to retrieve additional information for an item instance (such
+    /// A unique PDFInstance of an item in a user's inventory. Note, to retrieve additional information for an item PDFInstance (such
     /// as Tags, Description, or Custom Data that are set on the root catalog item), a call to GetCatalogItems is required. The
-    /// Item ID of the instance can then be matched to a catalog entry, which contains the additional information. Also note
+    /// Item ID of the PDFInstance can then be matched to a catalog entry, which contains the additional information. Also note
     /// that Custom Data is only set here from a call to UpdateUserInventoryItemCustomData.
     /// </summary>
     [Serializable]
     public class ItemInstance : PlayFabBaseModel
     {
         /// <summary>
-        /// Game specific comment associated with this instance when it was added to the user inventory.
+        /// Game specific comment associated with this PDFInstance when it was added to the user inventory.
         /// </summary>
         public string Annotation;
         /// <summary>
@@ -55,7 +55,7 @@ namespace PlayFab.MatchmakerModels
         /// </summary>
         public string BundleParent;
         /// <summary>
-        /// Catalog version for the inventory item, when this instance was created.
+        /// Catalog version for the inventory item, when this PDFInstance was created.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -67,7 +67,7 @@ namespace PlayFab.MatchmakerModels
         /// </summary>
         public string DisplayName;
         /// <summary>
-        /// Timestamp for when this instance will expire.
+        /// Timestamp for when this PDFInstance will expire.
         /// </summary>
         public DateTime? Expiration;
         /// <summary>
@@ -79,11 +79,11 @@ namespace PlayFab.MatchmakerModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique item identifier for this specific instance of the item.
+        /// Unique item identifier for this specific PDFInstance of the item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
-        /// Timestamp for when this instance was purchased.
+        /// Timestamp for when this PDFInstance was purchased.
         /// </summary>
         public DateTime? PurchaseDate;
         /// <summary>

@@ -833,7 +833,7 @@ namespace PlayFab
         }
 
         /// <summary>
-        /// Set the state of the indicated Game Server Instance. Also update the heartbeat for the instance.
+        /// Set the state of the indicated Game Server Instance. Also update the heartbeat for the PDFInstance.
         /// </summary>
         public void RefreshGameServerInstanceHeartbeat(RefreshGameServerInstanceHeartbeatRequest request, Action<RefreshGameServerInstanceHeartbeatResult> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
         {

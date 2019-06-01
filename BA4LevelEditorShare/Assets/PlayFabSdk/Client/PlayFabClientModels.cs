@@ -265,7 +265,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique instance identifier for this catalog item.
+        /// Unique PDFInstance identifier for this catalog item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -294,7 +294,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public CatalogItemBundleInfo Bundle;
         /// <summary>
-        /// if true, then an item instance of this type can be used to grant a character to a user.
+        /// if true, then an item PDFInstance of this type can be used to grant a character to a user.
         /// </summary>
         public bool CanBecomeCharacter;
         /// <summary>
@@ -335,12 +335,12 @@ namespace PlayFab.ClientModels
         /// </summary>
         public bool IsLimitedEdition;
         /// <summary>
-        /// if true, then only one item instance of this type will exist and its remaininguses will be incremented instead.
+        /// if true, then only one item PDFInstance of this type will exist and its remaininguses will be incremented instead.
         /// RemainingUses will cap out at Int32.Max (2,147,483,647). All subsequent increases will be discarded
         /// </summary>
         public bool IsStackable;
         /// <summary>
-        /// if true, then an item instance of this type can be traded between players using the trading APIs
+        /// if true, then an item PDFInstance of this type can be traded between players using the trading APIs
         /// </summary>
         public bool IsTradable;
         /// <summary>
@@ -578,7 +578,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public int ConsumeCount;
         /// <summary>
-        /// Unique instance identifier of the item to be consumed.
+        /// Unique PDFInstance identifier of the item to be consumed.
         /// </summary>
         public string ItemInstanceId;
     }
@@ -587,7 +587,7 @@ namespace PlayFab.ClientModels
     public class ConsumeItemResult : PlayFabResultCommon
     {
         /// <summary>
-        /// Unique instance identifier of the item with uses consumed.
+        /// Unique PDFInstance identifier of the item with uses consumed.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -1408,7 +1408,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public GameInstanceState? GameServerStateEnum;
         /// <summary>
-        /// last heartbeat of the game server instance, used in external game server provider mode
+        /// last heartbeat of the game server PDFInstance, used in external game server provider mode
         /// </summary>
         public DateTime? LastHeartbeat;
         /// <summary>
@@ -2984,7 +2984,7 @@ namespace PlayFab.ClientModels
     }
 
     /// <summary>
-    /// Grants a character to the user of the type specified by the item ID. The user must already have an instance of this item
+    /// Grants a character to the user of the type specified by the item ID. The user must already have an PDFInstance of this item
     /// in their inventory in order to allow character creation. This item can come from a purchase or grant, which must be done
     /// before calling to create the character.
     /// </summary>
@@ -3024,16 +3024,16 @@ namespace PlayFab.ClientModels
     }
 
     /// <summary>
-    /// A unique instance of an item in a user's inventory. Note, to retrieve additional information for an item instance (such
+    /// A unique PDFInstance of an item in a user's inventory. Note, to retrieve additional information for an item PDFInstance (such
     /// as Tags, Description, or Custom Data that are set on the root catalog item), a call to GetCatalogItems is required. The
-    /// Item ID of the instance can then be matched to a catalog entry, which contains the additional information. Also note
+    /// Item ID of the PDFInstance can then be matched to a catalog entry, which contains the additional information. Also note
     /// that Custom Data is only set here from a call to UpdateUserInventoryItemCustomData.
     /// </summary>
     [Serializable]
     public class ItemInstance : PlayFabBaseModel
     {
         /// <summary>
-        /// Game specific comment associated with this instance when it was added to the user inventory.
+        /// Game specific comment associated with this PDFInstance when it was added to the user inventory.
         /// </summary>
         public string Annotation;
         /// <summary>
@@ -3046,7 +3046,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public string BundleParent;
         /// <summary>
-        /// Catalog version for the inventory item, when this instance was created.
+        /// Catalog version for the inventory item, when this PDFInstance was created.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -3058,7 +3058,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public string DisplayName;
         /// <summary>
-        /// Timestamp for when this instance will expire.
+        /// Timestamp for when this PDFInstance will expire.
         /// </summary>
         public DateTime? Expiration;
         /// <summary>
@@ -3070,11 +3070,11 @@ namespace PlayFab.ClientModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique item identifier for this specific instance of the item.
+        /// Unique item identifier for this specific PDFInstance of the item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
-        /// Timestamp for when this instance was purchased.
+        /// Timestamp for when this PDFInstance was purchased.
         /// </summary>
         public DateTime? PurchaseDate;
         /// <summary>
@@ -5916,7 +5916,7 @@ namespace PlayFab.ClientModels
     {
         /// <summary>
         /// Specifies the catalog version that should be used to determine container contents. If unspecified, uses catalog
-        /// associated with the item instance.
+        /// associated with the item PDFInstance.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -5966,11 +5966,11 @@ namespace PlayFab.ClientModels
         /// </summary>
         public List<ItemInstance> GrantedItems;
         /// <summary>
-        /// Unique instance identifier of the container unlocked.
+        /// Unique PDFInstance identifier of the container unlocked.
         /// </summary>
         public string UnlockedItemInstanceId;
         /// <summary>
-        /// Unique instance identifier of the key used to unlock the container, if applicable.
+        /// Unique PDFInstance identifier of the key used to unlock the container, if applicable.
         /// </summary>
         public string UnlockedWithItemInstanceId;
         /// <summary>

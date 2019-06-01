@@ -6,13 +6,13 @@ using PlayFab.SharedModels;
 namespace PlayFab.AdminModels
 {
     /// <summary>
-    /// If the task instance has already completed, there will be no-op.
+    /// If the task PDFInstance has already completed, there will be no-op.
     /// </summary>
     [Serializable]
     public class AbortTaskInstanceRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// ID of a task instance that is being aborted.
+        /// ID of a task PDFInstance that is being aborted.
         /// </summary>
         public string TaskInstanceId;
     }
@@ -62,15 +62,15 @@ namespace PlayFab.AdminModels
         /// </summary>
         public DateTime StartedAt;
         /// <summary>
-        /// Current status of the task instance.
+        /// Current status of the task PDFInstance.
         /// </summary>
         public TaskInstanceStatus? Status;
         /// <summary>
-        /// Identifier of the task this instance belongs to.
+        /// Identifier of the task this PDFInstance belongs to.
         /// </summary>
         public NameIdentifier TaskIdentifier;
         /// <summary>
-        /// ID of the task instance.
+        /// ID of the task PDFInstance.
         /// </summary>
         public string TaskInstanceId;
         /// <summary>
@@ -426,7 +426,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public CatalogItemBundleInfo Bundle;
         /// <summary>
-        /// if true, then an item instance of this type can be used to grant a character to a user.
+        /// if true, then an item PDFInstance of this type can be used to grant a character to a user.
         /// </summary>
         public bool CanBecomeCharacter;
         /// <summary>
@@ -467,12 +467,12 @@ namespace PlayFab.AdminModels
         /// </summary>
         public bool IsLimitedEdition;
         /// <summary>
-        /// if true, then only one item instance of this type will exist and its remaininguses will be incremented instead.
+        /// if true, then only one item PDFInstance of this type will exist and its remaininguses will be incremented instead.
         /// RemainingUses will cap out at Int32.Max (2,147,483,647). All subsequent increases will be discarded
         /// </summary>
         public bool IsStackable;
         /// <summary>
-        /// if true, then an item instance of this type can be traded between players using the trading APIs
+        /// if true, then an item PDFInstance of this type can be traded between players using the trading APIs
         /// </summary>
         public bool IsTradable;
         /// <summary>
@@ -650,15 +650,15 @@ namespace PlayFab.AdminModels
         /// </summary>
         public DateTime StartedAt;
         /// <summary>
-        /// Current status of the task instance.
+        /// Current status of the task PDFInstance.
         /// </summary>
         public TaskInstanceStatus? Status;
         /// <summary>
-        /// Identifier of the task this instance belongs to.
+        /// Identifier of the task this PDFInstance belongs to.
         /// </summary>
         public NameIdentifier TaskIdentifier;
         /// <summary>
-        /// ID of the task instance.
+        /// ID of the task PDFInstance.
         /// </summary>
         public string TaskInstanceId;
     }
@@ -2138,11 +2138,11 @@ namespace PlayFab.AdminModels
     public class GetActionsOnPlayersInSegmentTaskInstanceResult : PlayFabResultCommon
     {
         /// <summary>
-        /// Parameter of this task instance
+        /// Parameter of this task PDFInstance
         /// </summary>
         public ActionsOnPlayersInSegmentTaskParameter Parameter;
         /// <summary>
-        /// Status summary of the actions-on-players-in-segment task instance
+        /// Status summary of the actions-on-players-in-segment task PDFInstance
         /// </summary>
         public ActionsOnPlayersInSegmentTaskSummary Summary;
     }
@@ -2224,11 +2224,11 @@ namespace PlayFab.AdminModels
     public class GetCloudScriptTaskInstanceResult : PlayFabResultCommon
     {
         /// <summary>
-        /// Parameter of this task instance
+        /// Parameter of this task PDFInstance
         /// </summary>
         public CloudScriptTaskParameter Parameter;
         /// <summary>
-        /// Status summary of the CloudScript task instance
+        /// Status summary of the CloudScript task PDFInstance
         /// </summary>
         public CloudScriptTaskSummary Summary;
     }
@@ -2877,7 +2877,7 @@ namespace PlayFab.AdminModels
     public class GetTaskInstanceRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// ID of the requested task instance.
+        /// ID of the requested task PDFInstance.
         /// </summary>
         public string TaskInstanceId;
     }
@@ -3066,7 +3066,7 @@ namespace PlayFab.AdminModels
     public class GrantedItemInstance : PlayFabBaseModel
     {
         /// <summary>
-        /// Game specific comment associated with this instance when it was added to the user inventory.
+        /// Game specific comment associated with this PDFInstance when it was added to the user inventory.
         /// </summary>
         public string Annotation;
         /// <summary>
@@ -3079,7 +3079,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string BundleParent;
         /// <summary>
-        /// Catalog version for the inventory item, when this instance was created.
+        /// Catalog version for the inventory item, when this PDFInstance was created.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -3095,7 +3095,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string DisplayName;
         /// <summary>
-        /// Timestamp for when this instance will expire.
+        /// Timestamp for when this PDFInstance will expire.
         /// </summary>
         public DateTime? Expiration;
         /// <summary>
@@ -3107,7 +3107,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique item identifier for this specific instance of the item.
+        /// Unique item identifier for this specific PDFInstance of the item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -3115,7 +3115,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string PlayFabId;
         /// <summary>
-        /// Timestamp for when this instance was purchased.
+        /// Timestamp for when this PDFInstance was purchased.
         /// </summary>
         public DateTime? PurchaseDate;
         /// <summary>
@@ -3259,16 +3259,16 @@ namespace PlayFab.AdminModels
     }
 
     /// <summary>
-    /// A unique instance of an item in a user's inventory. Note, to retrieve additional information for an item instance (such
+    /// A unique PDFInstance of an item in a user's inventory. Note, to retrieve additional information for an item PDFInstance (such
     /// as Tags, Description, or Custom Data that are set on the root catalog item), a call to GetCatalogItems is required. The
-    /// Item ID of the instance can then be matched to a catalog entry, which contains the additional information. Also note
+    /// Item ID of the PDFInstance can then be matched to a catalog entry, which contains the additional information. Also note
     /// that Custom Data is only set here from a call to UpdateUserInventoryItemCustomData.
     /// </summary>
     [Serializable]
     public class ItemInstance : PlayFabBaseModel
     {
         /// <summary>
-        /// Game specific comment associated with this instance when it was added to the user inventory.
+        /// Game specific comment associated with this PDFInstance when it was added to the user inventory.
         /// </summary>
         public string Annotation;
         /// <summary>
@@ -3281,7 +3281,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string BundleParent;
         /// <summary>
-        /// Catalog version for the inventory item, when this instance was created.
+        /// Catalog version for the inventory item, when this PDFInstance was created.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -3293,7 +3293,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string DisplayName;
         /// <summary>
-        /// Timestamp for when this instance will expire.
+        /// Timestamp for when this PDFInstance will expire.
         /// </summary>
         public DateTime? Expiration;
         /// <summary>
@@ -3305,11 +3305,11 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique item identifier for this specific instance of the item.
+        /// Unique item identifier for this specific PDFInstance of the item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
-        /// Timestamp for when this instance was purchased.
+        /// Timestamp for when this PDFInstance was purchased.
         /// </summary>
         public DateTime? PurchaseDate;
         /// <summary>
@@ -4438,7 +4438,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string CharacterId;
         /// <summary>
-        /// Unique PlayFab assigned instance identifier of the item
+        /// Unique PlayFab assigned PDFInstance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -4459,7 +4459,7 @@ namespace PlayFab.AdminModels
         /// </summary>
         public string CharacterId;
         /// <summary>
-        /// Unique PlayFab assigned instance identifier of the item
+        /// Unique PlayFab assigned PDFInstance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -4509,7 +4509,7 @@ namespace PlayFab.AdminModels
     }
 
     /// <summary>
-    /// The returned task instance ID can be used to query for task execution status.
+    /// The returned task PDFInstance ID can be used to query for task execution status.
     /// </summary>
     [Serializable]
     public class RunTaskRequest : PlayFabRequestCommon
@@ -4524,8 +4524,8 @@ namespace PlayFab.AdminModels
     public class RunTaskResult : PlayFabResultCommon
     {
         /// <summary>
-        /// ID of the task instance that is started. This can be used in Get*TaskInstance (e.g. GetCloudScriptTaskInstance) API call
-        /// to retrieve status for the task instance.
+        /// ID of the task PDFInstance that is started. This can be used in Get*TaskInstance (e.g. GetCloudScriptTaskInstance) API call
+        /// to retrieve status for the task PDFInstance.
         /// </summary>
         public string TaskInstanceId;
     }
@@ -4981,15 +4981,15 @@ namespace PlayFab.AdminModels
         /// </summary>
         public DateTime StartedAt;
         /// <summary>
-        /// Current status of the task instance.
+        /// Current status of the task PDFInstance.
         /// </summary>
         public TaskInstanceStatus? Status;
         /// <summary>
-        /// Identifier of the task this instance belongs to.
+        /// Identifier of the task this PDFInstance belongs to.
         /// </summary>
         public NameIdentifier TaskIdentifier;
         /// <summary>
-        /// ID of the task instance.
+        /// ID of the task PDFInstance.
         /// </summary>
         public string TaskInstanceId;
         /// <summary>

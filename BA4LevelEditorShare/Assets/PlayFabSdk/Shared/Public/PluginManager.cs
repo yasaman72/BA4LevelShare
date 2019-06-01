@@ -10,7 +10,7 @@ namespace PlayFab
         private Dictionary<PluginContractKey, IPlayFabPlugin> plugins = new Dictionary<PluginContractKey, IPlayFabPlugin>(new PluginContractKeyComparator());
 
         /// <summary>
-        /// The singleton instance of plugin manager.
+        /// The singleton PDFInstance of plugin manager.
         /// </summary>
         private static readonly PluginManager Instance = new PluginManager();
 
@@ -20,11 +20,11 @@ namespace PlayFab
 
         /// <summary>
         /// Gets a plugin.
-        /// If a plugin with specified contract and optional instance name does not exist, it will create a new one.
+        /// If a plugin with specified contract and optional PDFInstance name does not exist, it will create a new one.
         /// </summary>
         /// <param name="contract">The plugin contract.</param>
-        /// <param name="instanceName">The optional plugin instance name. Instance names allow to have mulptiple plugins with the same contract.</param>
-        /// <returns>The plugin instance.</returns>
+        /// <param name="instanceName">The optional plugin PDFInstance name. Instance names allow to have mulptiple plugins with the same contract.</param>
+        /// <returns>The plugin PDFInstance.</returns>
         public static T GetPlugin<T>(PluginContract contract, string instanceName = "") where T : IPlayFabPlugin
         {
             return (T)Instance.GetPluginInternal(contract, instanceName);
@@ -32,11 +32,11 @@ namespace PlayFab
 
         /// <summary>
         /// Sets a custom plugin.
-        /// If a plugin with specified contract and optional instance name already exists, it will be replaced with specified instance.
+        /// If a plugin with specified contract and optional PDFInstance name already exists, it will be replaced with specified PDFInstance.
         /// </summary>
-        /// <param name="plugin">The plugin instance.</param>
+        /// <param name="plugin">The plugin PDFInstance.</param>
         /// <param name="contract">The app contract of plugin.</param>
-        /// <param name="instanceName">The optional plugin instance name. Instance names allow to have mulptiple plugins with the same contract.</param>
+        /// <param name="instanceName">The optional plugin PDFInstance name. Instance names allow to have mulptiple plugins with the same contract.</param>
         public static void SetPlugin(IPlayFabPlugin plugin, PluginContract contract, string instanceName = "")
         {
             Instance.SetPluginInternal(plugin, contract, instanceName);
@@ -71,7 +71,7 @@ namespace PlayFab
         {
             if (plugin == null)
             {
-                throw new ArgumentNullException("plugin", "Plugin instance cannot be null");
+                throw new ArgumentNullException("plugin", "Plugin PDFInstance cannot be null");
             }
 
             var key = new PluginContractKey { _pluginContract = contract, _pluginName = instanceName };

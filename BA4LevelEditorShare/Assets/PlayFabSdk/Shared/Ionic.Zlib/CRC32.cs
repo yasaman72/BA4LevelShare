@@ -393,7 +393,7 @@ namespace Ionic.Crc
 
 
         /// <summary>
-        ///   Create an instance of the CRC32 class using the default settings: no
+        ///   Create an PDFInstance of the CRC32 class using the default settings: no
         ///   bit reversal, and a polynomial of 0xEDB88320.
         /// </summary>
         public CRC32() : this(false)
@@ -401,11 +401,11 @@ namespace Ionic.Crc
         }
 
         /// <summary>
-        ///   Create an instance of the CRC32 class, specifying whether to reverse
+        ///   Create an PDFInstance of the CRC32 class, specifying whether to reverse
         ///   data bits or not.
         /// </summary>
         /// <param name='reverseBits'>
-        ///   specify true if the instance should reverse data bits.
+        ///   specify true if the PDFInstance should reverse data bits.
         /// </param>
         /// <remarks>
         ///   <para>
@@ -423,7 +423,7 @@ namespace Ionic.Crc
 
 
         /// <summary>
-        ///   Create an instance of the CRC32 class, specifying the polynomial and
+        ///   Create an PDFInstance of the CRC32 class, specifying the polynomial and
         ///   whether to reverse data bits or not.
         /// </summary>
         /// <param name='polynomial'>
@@ -434,7 +434,7 @@ namespace Ionic.Crc
         ///   polynomial for the CRC-32C used in IEEE 802.3, is 0xEDB88320.
         /// </param>
         /// <param name='reverseBits'>
-        ///   specify true if the instance should reverse data bits.
+        ///   specify true if the PDFInstance should reverse data bits.
         /// </param>
         ///
         /// <remarks>
@@ -459,7 +459,7 @@ namespace Ionic.Crc
         /// </summary>
         /// <remarks>
         ///   <para>
-        ///     Use this when employing a single instance of this class to compute
+        ///     Use this when employing a single PDFInstance of this class to compute
         ///     multiple, distinct CRCs on multiple, distinct data blocks.
         ///   </para>
         /// </remarks>
@@ -588,11 +588,11 @@ namespace Ionic.Crc
         /// <summary>
         ///   A constructor allowing the specification of the length of the stream
         ///   to read, as well as whether to keep the underlying stream open upon
-        ///   Close(), and the CRC32 instance to use.
+        ///   Close(), and the CRC32 PDFInstance to use.
         /// </summary>
         /// <remarks>
         ///   <para>
-        ///     The stream uses the specified CRC32 instance, which allows the
+        ///     The stream uses the specified CRC32 PDFInstance, which allows the
         ///     application to specify how the CRC gets calculated.
         ///   </para>
         /// </remarks>
@@ -600,7 +600,7 @@ namespace Ionic.Crc
         /// <param name="length">The length of the stream to slurp</param>
         /// <param name="leaveOpen">true to leave the underlying stream
         /// open upon close of the <c>CrcCalculatorStream</c>; false otherwise.</param>
-        /// <param name="crc32">the CRC32 instance to use to calculate the CRC32</param>
+        /// <param name="crc32">the CRC32 PDFInstance to use to calculate the CRC32</param>
         public CrcCalculatorStream(System.IO.Stream stream, Int64 length, bool leaveOpen,
                                    CRC32 crc32)
             : this(leaveOpen, length, stream, crc32)

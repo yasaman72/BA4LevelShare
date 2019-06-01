@@ -20,15 +20,15 @@ namespace PlayFab.Internal
         {
             if (_instance == null)
             {
-                //find existing instance
+                //find existing PDFInstance
                 _instance = FindObjectOfType<T>();
                 if (_instance == null)
                 {
-                    //create new instance
+                    //create new PDFInstance
                     var go = new GameObject(typeof(T).Name);
                     _instance = go.AddComponent<T>();
                 }
-                //initialize instance if necessary
+                //initialize PDFInstance if necessary
                 if (!_instance.initialized)
                 {
                     _instance.Initialize();
@@ -44,7 +44,7 @@ namespace PlayFab.Internal
                 DontDestroyOnLoad(this);
             }
 
-            //check if instance already exists when reloading original scene
+            //check if PDFInstance already exists when reloading original scene
             if (_instance != null)
             {
                 DestroyImmediate (gameObject);

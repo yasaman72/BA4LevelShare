@@ -170,7 +170,7 @@ namespace PlayFab.MultiplayerModels
 
     /// <summary>
     /// Cancels all tickets of which the player is a member in a given queue that are not cancelled or matched. This API is
-    /// useful if you lose track of what tickets the player is a member of (if the title crashes for instance) and want to
+    /// useful if you lose track of what tickets the player is a member of (if the title crashes for PDFInstance) and want to
     /// "reset". The Entity field is optional if the caller is a player and defaults to that player. Players may not cancel
     /// tickets for other people. The Entity field is required if the caller is a server (authenticated as the title).
     /// </summary>

@@ -161,7 +161,7 @@ namespace Ionic.Zlib
         /// </para>
         ///
         /// <para>
-        ///   The instance will use the default compression level, the default
+        ///   The PDFInstance will use the default compression level, the default
         ///   buffer sizes and the default number of threads and buffers per
         ///   thread.
         /// </para>
@@ -772,7 +772,7 @@ namespace Ionic.Zlib
         /// <remarks>
         ///   <para>
         ///     Because ParallelDeflateOutputStream is IDisposable, the
-        ///     application must call this method when finished using the instance.
+        ///     application must call this method when finished using the PDFInstance.
         ///   </para>
         ///   <para>
         ///     This method is generally called implicitly upon exit from
@@ -1260,7 +1260,7 @@ namespace Ionic.Zlib
             Lifecycle    = 128,  // constructor/disposer
             Session      = 256,  // Close/Reset
             Synch        = 512,  // thread synchronization
-            Instance     = 1024, // instance settings
+            Instance     = 1024, // PDFInstance settings
             Compress     = 2048,  // compress task
             Write        = 4096,    // filling buffers, when caller invokes Write()
             WriteEnter   = 8192,    // upon entry to Write()
