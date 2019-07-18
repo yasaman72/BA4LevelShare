@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
@@ -8,6 +9,7 @@ using PlayFab.Json;
 public class PlayFabController : MonoBehaviour
 {
     public int playerLevel;
+    public string cuurrentPlayerPlayfabID;
 
     public static PlayFabController instance { get; private set; }
 
@@ -97,4 +99,67 @@ public class PlayFabController : MonoBehaviour
     {
         Debug.Log(error.GenerateErrorReport());
     }
+
+    public void SetUserData(string key, string value)
+    {
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+        {
+            Data = new Dictionary<string, string>() { { key, value } }
+        },
+            result =>
+            {
+                Debug.Log("Successfully updated user data for key: " + key + " and value: " + value);
+            },
+            error =>
+            {
+                Debug.Log("Got error setting user data Ancestor to Arthur");
+                Debug.Log(error.GenerateErrorReport());
+            });
+    }
+
+    public void GetUserData(string key, Action<GetUserDataResultHolder> OnFinished)
+    {
+        GetUserDataResultHolder finalResultHolder = new GetUserDataResultHolder();
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        {
+            PlayFabId = cuurrentPlayerPlayfabID,
+            Keys = null
+        }, result =>
+        {
+            Debug.Log("Got user data:");
+            if (result.Data == null || !result.Data.ContainsKey(key))
+            {
+                Debug.Log("No key for " + key);
+                finalResultHolder.response = Response.noKey;
+            }
+            else
+            {
+                //Debug.Log("key: " + result.Data[key].Value);
+                finalResultHolder.response = Response.result;
+                finalResultHolder.value = result.Data[key].Value;
+            }
+            OnFinished.Invoke(finalResultHolder);
+
+        }, (error) =>
+        {
+            Debug.Log("Got error retrieving user data: ");
+            Debug.Log(error.GenerateErrorReport());
+            finalResultHolder.response = Response.Error;
+            OnFinished.Invoke(finalResultHolder);
+        });
+
+    }
+}
+
+public struct GetUserDataResultHolder
+{
+    public string value;
+    public Response response;
+}
+
+public enum Response
+{
+    result,
+    noKey,
+    Error
 }

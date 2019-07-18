@@ -56,7 +56,6 @@ public class PlayFabLogin : MonoBehaviour
     {
         userEmail = email;
     }
-
     public void SetUserPassword(string password)
     {
         userPassword = password;
@@ -80,6 +79,8 @@ public class PlayFabLogin : MonoBehaviour
         PlayerPrefs.SetString("PASSWORD", userPassword);
 
         loginPanel.SetActive(false);
+        // storing current player playfab ID
+        PlayFabController.instance.cuurrentPlayerPlayfabID = result.PlayFabId;
 
         PlayFabController.instance.GetStatistics();
     }
@@ -96,6 +97,9 @@ public class PlayFabLogin : MonoBehaviour
         Debug.Log("Login successful!");
 
         loginPanel.SetActive(false);
+
+        // storing current player playfab ID
+        PlayFabController.instance.cuurrentPlayerPlayfabID = result.PlayFabId;
 
         PlayFabController.instance.GetStatistics();
     }
@@ -125,12 +129,13 @@ public class PlayFabLogin : MonoBehaviour
 
         PlayerPrefs.SetString("EMAIL", userEmail);
         PlayerPrefs.SetString("PASSWORD", userPassword);
+        // storing current player playfab ID
+        PlayFabController.instance.cuurrentPlayerPlayfabID = result.PlayFabId;
 
         UpdateUserDisplayName();
 
         loginPanel.SetActive(false);
     }
-
 
     private void OnRegisterFailure(PlayFabError error)
     {

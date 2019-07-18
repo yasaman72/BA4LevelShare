@@ -7,6 +7,20 @@ public class LoadLevel : MonoBehaviour
     [SerializeField] private GameObject m_levelGrid;
     [SerializeField] private SetLogText m_setLogText;
 
+    public static LoadLevel instance { get; private set; }
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void LoadLastLevel()
     {
         string levelString;
