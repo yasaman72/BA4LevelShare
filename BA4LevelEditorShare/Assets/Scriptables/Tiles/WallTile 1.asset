@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63e5d7744d66d7a46b4998ce5106d398, type: 3}
-  m_Name: TileList
+  m_Script: {fileID: 11500000, guid: dd050c711a003af4ba88d9f341ce0002, type: 3}
+  m_Name: WallTile 1
   m_EditorClassIdentifier: 
-  tiles:
-  - {fileID: 11400000, guid: ffe2d22a6a33de944bb7f1d22f8b99a3, type: 2}
-  - {fileID: 11400000, guid: 8a288be2754e14340aacd5837a1885aa, type: 2}
+  ID: 1
+  sprite: {fileID: -537749870668139058, guid: 2dcee96ffcbc05546bfa85ada87d7113, type: 3}
+  blocksMove: 1

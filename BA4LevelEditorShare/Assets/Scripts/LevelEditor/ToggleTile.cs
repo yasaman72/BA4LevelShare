@@ -7,10 +7,10 @@ public class ToggleTile : MonoBehaviour
 {
     public TilesList tileList;
     public bool unchangeAble;
+    public int currenTileID;
 
     private Image image;
     private Button button;
-    private int currenTileID;
 
 
     // Start is called before the first frame update
@@ -19,6 +19,11 @@ public class ToggleTile : MonoBehaviour
         image = gameObject.GetComponent<Image>();
         button = gameObject.GetComponent<Button>();
 
+        SetStartingTile();
+    }
+
+    public void SetStartingTile()
+    {
         if (unchangeAble)
         {
             bool findBlockingTile = false;
@@ -63,5 +68,16 @@ public class ToggleTile : MonoBehaviour
     private void SetTileAppearance()
     {
         image.sprite = tileList.tiles[currenTileID].sprite;
+    }
+
+    public void SetTileToTileId(int tileId)
+    {
+        if (tileId >= tileList.tiles.Length)
+        {
+            Debug.Log("the "+ tileId + " tile id is higher than available tiles");
+            return;
+        }
+        currenTileID = tileId;
+        SetTileAppearance();
     }
 }
