@@ -39,7 +39,12 @@ public class ShareLevel : MonoBehaviour
 
         // Save another key/value for the rating of the level with the initial value of zero
         string newLevelRatingKey = "sharedLevelNo" + (sharedLevelsAmount + 1) + "Rating";
-        PlayFabController.instance.SetUserData(newLevelRatingKey, "0");
+        PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.cuurrentPlayerPlayfabID, newLevelRatingKey, "0", 
+            () =>
+            {
+                string newLevelRatingCountKey = "sharedLevelNo" + (sharedLevelsAmount + 1) + "RatingCountKey";
+                PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.cuurrentPlayerPlayfabID, newLevelRatingCountKey, "0");
+            });
     }
 
     #region Loading For Debugging

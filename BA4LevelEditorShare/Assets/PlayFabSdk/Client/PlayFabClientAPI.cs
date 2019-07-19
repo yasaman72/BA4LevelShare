@@ -16,7 +16,7 @@ namespace PlayFab
         static PlayFabClientAPI() {}
 
         /// <summary>
-        /// Check to See if the client is logged in.
+        /// Verify client login.
         /// </summary>
         public static bool IsClientLoggedIn()
         {
@@ -250,11 +250,9 @@ namespace PlayFab
                 var wrappedJson = serializer.SerializeObject(wrappedResult.FunctionResult);
                 try {
                     wrappedResult.FunctionResult = serializer.DeserializeObject<TOut>(wrappedJson);
-                }
-                catch (Exception)
-                {
+                } catch (Exception) {
                     wrappedResult.FunctionResult = wrappedJson;
-                    wrappedResult.Logs.Add(new LogStatement{ Level = "Warning", Data = wrappedJson, Message = "Sdk Message: Could not deserialize result as: " + typeof (TOut).Name });
+                    wrappedResult.Logs.Add(new LogStatement { Level = "Warning", Data = wrappedJson, Message = "Sdk Message: Could not deserialize result as: " + typeof(TOut).Name });
                 }
                 resultCallback(wrappedResult);
             };
@@ -1344,7 +1342,7 @@ namespace PlayFab
         /// Attempts to locate a game session matching the given parameters. If the goal is to match the player into a specific
         /// active session, only the LobbyId is required. Otherwise, the BuildVersion, GameMode, and Region are all required
         /// parameters. Note that parameters specified in the search are required (they are not weighting factors). If a slot is
-        /// found in a server PDFInstance matching the parameters, the slot will be assigned to that player, removing it from the
+        /// found in a server instance matching the parameters, the slot will be assigned to that player, removing it from the
         /// availabe set. In that case, the information on the game session will be returned, otherwise the Status returned will be
         /// GameNotFound.
         /// </summary>
@@ -1358,7 +1356,7 @@ namespace PlayFab
         }
 
         /// <summary>
-        /// Opens a new outstanding trade. Note that a given item PDFInstance may only be in one open trade at a time.
+        /// Opens a new outstanding trade. Note that a given item instance may only be in one open trade at a time.
         /// </summary>
         public static void OpenTrade(OpenTradeRequest request, Action<OpenTradeResponse> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
         {

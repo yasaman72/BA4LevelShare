@@ -244,11 +244,9 @@ namespace PlayFab
                 var wrappedJson = serializer.SerializeObject(wrappedResult.FunctionResult);
                 try {
                     wrappedResult.FunctionResult = serializer.DeserializeObject<TOut>(wrappedJson);
-                }
-                catch (Exception)
-                {
+                } catch (Exception) {
                     wrappedResult.FunctionResult = wrappedJson;
-                    wrappedResult.Logs.Add(new LogStatement{ Level = "Warning", Data = wrappedJson, Message = "Sdk Message: Could not deserialize result as: " + typeof (TOut).Name });
+                    wrappedResult.Logs.Add(new LogStatement { Level = "Warning", Data = wrappedJson, Message = "Sdk Message: Could not deserialize result as: " + typeof(TOut).Name });
                 }
                 resultCallback(wrappedResult);
             };
@@ -961,7 +959,7 @@ namespace PlayFab
         }
 
         /// <summary>
-        /// Set the state of the indicated Game Server Instance. Also update the heartbeat for the PDFInstance.
+        /// Set the state of the indicated Game Server Instance. Also update the heartbeat for the instance.
         /// </summary>
         public static void RefreshGameServerInstanceHeartbeat(RefreshGameServerInstanceHeartbeatRequest request, Action<RefreshGameServerInstanceHeartbeatResult> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
         {

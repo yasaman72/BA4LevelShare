@@ -9,23 +9,29 @@ public class LoadOnlineLevel : MonoBehaviour
 
     private string m_levelCode;
     private string m_ownerPlayFabID;
+    private string m_levelKey;
+    private string m_levelRateKey;
+
+    private LevelData m_levelData;
 
     public void LoadTheLevel()
     {
-        GameObject.FindGameObjectWithTag("LevelList").SetActive(false);
-        Debug.Log("loaded online level");
+        CurrentLevelData.instance.ChangeRateButtonVisibility(true);
+        CurrentLevelData.instance.thisLevelData = m_levelData;
+        Debug.Log("m_levelCode: " + m_levelCode);
 
-        //TODO: load level with its code
-        LoadLevel.instance.LoadLevelWithCode(m_levelCode);
+        GameObject.FindGameObjectWithTag("LevelList").SetActive(false);
+
+        // load level with its code
+        LoadLevel.instance.LoadLevelWithCode(m_levelData.LevelCode);
     }
 
-    public void SetLevelData(string levelCode, string levelDesigner, string levelRating, string ownerPlayFabId)
+    public void SetLevelData(LevelData levelData)
     {
-        m_levelCode = levelCode;
-        m_ownerPlayFabID = ownerPlayFabId;
+        m_levelData = levelData;
 
-        m_levelCodeText.text = levelCode;
-        m_levelDesignerText.text = levelDesigner;
-        m_levelRatingText.text = levelRating;
+        m_levelCodeText.text = m_levelData.LevelCode;
+        m_levelDesignerText.text = m_levelData.DesignerName;
+        m_levelRatingText.text = m_levelData.Rating;
     }
 }

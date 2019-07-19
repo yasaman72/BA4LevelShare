@@ -3538,6 +3538,7 @@ GameObject:
   - component: {fileID: 359120316}
   - component: {fileID: 359120318}
   - component: {fileID: 359120317}
+  - component: {fileID: 359120319}
   m_Layer: 5
   m_Name: Rating
   m_TagString: Untagged
@@ -3602,6 +3603,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 359120315}
   m_CullTransparentMesh: 0
+--- !u!114 &359120319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359120315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35975ef0eb637c49b2302d63d1472b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rateButton: {fileID: 1760640055}
+  m_rateText: {fileID: 922280391}
+  m_inputField: {fileID: 1987571204}
+  _loadingScreenManager: {fileID: 434019951}
+  _deleteLevel: {fileID: 712167901}
 --- !u!1 &364152848
 GameObject:
   m_ObjectHideFlags: 0
@@ -7700,7 +7718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &781884092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7716,10 +7734,10 @@ RectTransform:
   m_Father: {fileID: 1645447164}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 46.275, y: -184.61356}
+  m_SizeDelta: {x: 92.55, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &781884093
 MonoBehaviour:
@@ -11291,6 +11309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1081418705}
+  - component: {fileID: 1081418706}
   m_Layer: 0
   m_Name: LevelEditor
   m_TagString: Untagged
@@ -11313,6 +11332,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1081418706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081418704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a354f7c34611794485faf56cb70d1a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rateButton: {fileID: 1321429625}
+  thisLevelData:
+    LevelCode: 
+    Rating: 
+    RateCount: 
+    DesignerName: 
+    OwnerPlayFabId: 
+    levelKey: 
+    levelRateKey: 
+    RatingCountKey: 
 --- !u!1001 &1097534410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14057,12 +14098,12 @@ GameObject:
   - component: {fileID: 1321429628}
   - component: {fileID: 1321429627}
   m_Layer: 5
-  m_Name: FinishedLevel
+  m_Name: FinishedLevel/Rate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1321429626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18787,8 +18828,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 712167901}
-        m_MethodName: DeleteTheLevel
+      - m_Target: {fileID: 359120319}
+        m_MethodName: RateLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20710,16 +20751,16 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1760640055}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 359120319}
+        m_MethodName: FinishedEntringRate
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: TMPro.TMP_InputField+SubmitEvent, Unity.TextMeshPro, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -20750,7 +20791,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 359120319}
+        m_MethodName: CheckEnteredRate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: TMPro.TMP_InputField+OnChangeEvent, Unity.TextMeshPro, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnTouchScreenKeyboardStatusChanged:

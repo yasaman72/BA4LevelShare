@@ -331,7 +331,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public CatalogItemBundleInfo Bundle;
         /// <summary>
-        /// if true, then an item PDFInstance of this type can be used to grant a character to a user.
+        /// if true, then an item instance of this type can be used to grant a character to a user.
         /// </summary>
         public bool CanBecomeCharacter;
         /// <summary>
@@ -372,12 +372,12 @@ namespace PlayFab.ServerModels
         /// </summary>
         public bool IsLimitedEdition;
         /// <summary>
-        /// if true, then only one item PDFInstance of this type will exist and its remaininguses will be incremented instead.
+        /// if true, then only one item instance of this type will exist and its remaininguses will be incremented instead.
         /// RemainingUses will cap out at Int32.Max (2,147,483,647). All subsequent increases will be discarded
         /// </summary>
         public bool IsStackable;
         /// <summary>
-        /// if true, then an item PDFInstance of this type can be traded between players using the trading APIs
+        /// if true, then an item instance of this type can be traded between players using the trading APIs
         /// </summary>
         public bool IsTradable;
         /// <summary>
@@ -557,7 +557,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public int ConsumeCount;
         /// <summary>
-        /// Unique PDFInstance identifier of the item to be consumed.
+        /// Unique instance identifier of the item to be consumed.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -570,7 +570,7 @@ namespace PlayFab.ServerModels
     public class ConsumeItemResult : PlayFabResultCommon
     {
         /// <summary>
-        /// Unique PDFInstance identifier of the item with uses consumed.
+        /// Unique instance identifier of the item with uses consumed.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -1834,21 +1834,22 @@ namespace PlayFab.ServerModels
         EntityAPIKeyOrSecretInvalid,
         EconomyServiceUnavailable,
         EconomyServiceInternalError,
-        KustoProxyQueryRateLimitExceeded,
+        QueryRateLimitExceeded,
         EntityAPIKeyCreationDisabledForEntity,
         StudioCreationRateLimited,
         StudioCreationInProgress,
         DuplicateStudioName,
         StudioNotFound,
-        StudioDeletionInProgress,
+        StudioDeleted,
         StudioDeactivated,
+        StudioActivated,
         TitleCreationRateLimited,
         TitleCreationInProgress,
         DuplicateTitleName,
-        TitleNotFound,
-        TitleDeletionInProgress,
+        TitleActivationRateLimited,
+        TitleActivationInProgress,
         TitleDeactivated,
-        TitleAlreadyActivated,
+        TitleActivated,
         CloudScriptAzureFunctionsExecutionTimeLimitExceeded,
         CloudScriptAzureFunctionsArgumentSizeExceeded,
         CloudScriptAzureFunctionsReturnSizeExceeded,
@@ -1888,6 +1889,7 @@ namespace PlayFab.ServerModels
         CatalogFeatureDisabled,
         CatalogConfigInvalid,
         CatalogUnauthorized,
+        CatalogItemTypeInvalid,
         ExportInvalidStatusUpdate,
         ExportInvalidPrefix,
         ExportBlobContainerDoesNotExist,
@@ -1904,7 +1906,9 @@ namespace PlayFab.ServerModels
         ExportUnknownError,
         ExportCantEditPendingExport,
         ExportLimitExports,
-        ExportLimitEvents
+        ExportLimitEvents,
+        TitleNotEnabledForParty,
+        PartyVersionNotFound
     }
 
     [Serializable]
@@ -3231,7 +3235,7 @@ namespace PlayFab.ServerModels
     public class GrantedItemInstance : PlayFabBaseModel
     {
         /// <summary>
-        /// Game specific comment associated with this PDFInstance when it was added to the user inventory.
+        /// Game specific comment associated with this instance when it was added to the user inventory.
         /// </summary>
         public string Annotation;
         /// <summary>
@@ -3244,7 +3248,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string BundleParent;
         /// <summary>
-        /// Catalog version for the inventory item, when this PDFInstance was created.
+        /// Catalog version for the inventory item, when this instance was created.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -3260,7 +3264,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string DisplayName;
         /// <summary>
-        /// Timestamp for when this PDFInstance will expire.
+        /// Timestamp for when this instance will expire.
         /// </summary>
         public DateTime? Expiration;
         /// <summary>
@@ -3272,7 +3276,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique item identifier for this specific PDFInstance of the item.
+        /// Unique item identifier for this specific instance of the item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -3280,7 +3284,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string PlayFabId;
         /// <summary>
-        /// Timestamp for when this PDFInstance was purchased.
+        /// Timestamp for when this instance was purchased.
         /// </summary>
         public DateTime? PurchaseDate;
         /// <summary>
@@ -3447,16 +3451,16 @@ namespace PlayFab.ServerModels
     }
 
     /// <summary>
-    /// A unique PDFInstance of an item in a user's inventory. Note, to retrieve additional information for an item PDFInstance (such
+    /// A unique instance of an item in a user's inventory. Note, to retrieve additional information for an item instance (such
     /// as Tags, Description, or Custom Data that are set on the root catalog item), a call to GetCatalogItems is required. The
-    /// Item ID of the PDFInstance can then be matched to a catalog entry, which contains the additional information. Also note
+    /// Item ID of the instance can then be matched to a catalog entry, which contains the additional information. Also note
     /// that Custom Data is only set here from a call to UpdateUserInventoryItemCustomData.
     /// </summary>
     [Serializable]
     public class ItemInstance : PlayFabBaseModel
     {
         /// <summary>
-        /// Game specific comment associated with this PDFInstance when it was added to the user inventory.
+        /// Game specific comment associated with this instance when it was added to the user inventory.
         /// </summary>
         public string Annotation;
         /// <summary>
@@ -3469,7 +3473,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string BundleParent;
         /// <summary>
-        /// Catalog version for the inventory item, when this PDFInstance was created.
+        /// Catalog version for the inventory item, when this instance was created.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -3481,7 +3485,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string DisplayName;
         /// <summary>
-        /// Timestamp for when this PDFInstance will expire.
+        /// Timestamp for when this instance will expire.
         /// </summary>
         public DateTime? Expiration;
         /// <summary>
@@ -3493,11 +3497,11 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string ItemId;
         /// <summary>
-        /// Unique item identifier for this specific PDFInstance of the item.
+        /// Unique item identifier for this specific instance of the item.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
-        /// Timestamp for when this PDFInstance was purchased.
+        /// Timestamp for when this instance was purchased.
         /// </summary>
         public DateTime? PurchaseDate;
         /// <summary>
@@ -3770,7 +3774,7 @@ namespace PlayFab.ServerModels
     public class ModifyItemUsesRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// Unique PDFInstance identifier of the item to be modified.
+        /// Unique instance identifier of the item to be modified.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -3787,7 +3791,7 @@ namespace PlayFab.ServerModels
     public class ModifyItemUsesResult : PlayFabResultCommon
     {
         /// <summary>
-        /// Unique PDFInstance identifier of the item with uses consumed.
+        /// Unique instance identifier of the item with uses consumed.
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -3831,7 +3835,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string GivingCharacterId;
         /// <summary>
-        /// Unique PlayFab assigned PDFInstance identifier of the item
+        /// Unique PlayFab assigned instance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -3861,7 +3865,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string CharacterId;
         /// <summary>
-        /// Unique PlayFab assigned PDFInstance identifier of the item
+        /// Unique PlayFab assigned instance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -3887,7 +3891,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string CharacterId;
         /// <summary>
-        /// Unique PlayFab assigned PDFInstance identifier of the item
+        /// Unique PlayFab assigned instance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -4499,7 +4503,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string Build;
         /// <summary>
-        /// Game Mode the Game Server PDFInstance is running. Note that this must be defined in the Game Modes tab in the PlayFab Game
+        /// Game Mode the Game Server instance is running. Note that this must be defined in the Game Modes tab in the PlayFab Game
         /// Manager, along with the Build ID (the same Game Mode can be defined for multiple Build IDs).
         /// </summary>
         public string GameMode;
@@ -4513,11 +4517,11 @@ namespace PlayFab.ServerModels
         /// </summary>
         public Region Region;
         /// <summary>
-        /// IPV4 address of the game server PDFInstance.
+        /// IPV4 address of the game server instance.
         /// </summary>
         public string ServerIPV4Address;
         /// <summary>
-        /// IPV6 address (if any) of the game server PDFInstance.
+        /// IPV6 address (if any) of the game server instance.
         /// </summary>
         public string ServerIPV6Address;
         /// <summary>
@@ -4715,7 +4719,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string CharacterId;
         /// <summary>
-        /// Unique PlayFab assigned PDFInstance identifier of the item
+        /// Unique PlayFab assigned instance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -4736,7 +4740,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string CharacterId;
         /// <summary>
-        /// Unique PlayFab assigned PDFInstance identifier of the item
+        /// Unique PlayFab assigned instance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>
@@ -5007,7 +5011,7 @@ namespace PlayFab.ServerModels
     public class SetGameServerInstanceDataRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// Custom data to set for the specified game server PDFInstance.
+        /// Custom data to set for the specified game server instance.
         /// </summary>
         public string GameServerData;
         /// <summary>
@@ -5029,7 +5033,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string LobbyId;
         /// <summary>
-        /// State to set for the specified game server PDFInstance.
+        /// State to set for the specified game server instance.
         /// </summary>
         public GameInstanceState State;
     }
@@ -5401,7 +5405,7 @@ namespace PlayFab.ServerModels
     {
         /// <summary>
         /// Specifies the catalog version that should be used to determine container contents. If unspecified, uses catalog
-        /// associated with the item PDFInstance.
+        /// associated with the item instance.
         /// </summary>
         public string CatalogVersion;
         /// <summary>
@@ -5459,11 +5463,11 @@ namespace PlayFab.ServerModels
         /// </summary>
         public List<ItemInstance> GrantedItems;
         /// <summary>
-        /// Unique PDFInstance identifier of the container unlocked.
+        /// Unique instance identifier of the container unlocked.
         /// </summary>
         public string UnlockedItemInstanceId;
         /// <summary>
-        /// Unique PDFInstance identifier of the key used to unlock the container, if applicable.
+        /// Unique instance identifier of the key used to unlock the container, if applicable.
         /// </summary>
         public string UnlockedWithItemInstanceId;
         /// <summary>
@@ -5736,7 +5740,7 @@ namespace PlayFab.ServerModels
     }
 
     /// <summary>
-    /// This function performs an additive update of the arbitrary JSON object containing the custom data for the item PDFInstance
+    /// This function performs an additive update of the arbitrary JSON object containing the custom data for the item instance
     /// which belongs to the specified user. In updating the custom data object, keys which already exist in the object will
     /// have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed
     /// apart from those specified in the call.
@@ -5754,7 +5758,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public Dictionary<string,string> Data;
         /// <summary>
-        /// Unique PlayFab assigned PDFInstance identifier of the item
+        /// Unique PlayFab assigned instance identifier of the item
         /// </summary>
         public string ItemInstanceId;
         /// <summary>

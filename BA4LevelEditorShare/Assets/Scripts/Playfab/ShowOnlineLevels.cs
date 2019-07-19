@@ -30,7 +30,8 @@ public class ShowOnlineLevels : MonoBehaviour
         foreach (var entry in playersEntry)
         {
             _loadingScreenManager.ShowLoading();
-            PlayFabController.instance.GetUserData(SharedLevelAmountKey,
+            PlayFabController.instance.GetUserData(SharedLevelAmountKey
+                , entry.PlayFabId,
                 (levelCountRequestResult) =>
                 {
                     int sharedLevelsAmount = 0;
@@ -49,13 +50,14 @@ public class ShowOnlineLevels : MonoBehaviour
                             break;
                     }
 
-                    LevelData levelData = new LevelData();
-                    levelData.DesignerName = entry.DisplayName;
-                    levelData.OwnerPlayFabId = entry.PlayFabId;
+                    LevelData levelData = new LevelData
+                    {
+                        DesignerName = entry.DisplayName,
+                        OwnerPlayFabId = entry.PlayFabId
+                    };
 
                     OnFinishedGettingLevelAmount(sharedLevelsAmount, levelData);
-                }
-                , entry.PlayFabId);
+                });
         }
     }
 
@@ -63,24 +65,38 @@ public class ShowOnlineLevels : MonoBehaviour
     {
         int randomLevelIndex = Random.Range(1, sharedLevelsAmount + 1);
 
-        string LevelKey = "sharedLevelNo" + randomLevelIndex;
-        string newLevelRatingKey = "sharedLevelNo" + randomLevelIndex + "Rating";
+        levelData.levelKey = "sharedLevelNo" + randomLevelIndex;
+        levelData.levelRateKey = "sharedLevelNo" + randomLevelIndex + "Rating";
+        levelData.RatingCountKey = "sharedLevelNo" + randomLevelIndex + "RatingCountKey";
+
 
         Debug.Log("random level index: " + randomLevelIndex);
-        PlayFabController.instance.GetUserData(LevelKey,
+        PlayFabController.instance.GetUserData(levelData.levelKey,
             (levelRequestResult) =>
         {
             if (levelRequestResult.response == Response.result)
             {
                 levelData.LevelCode = levelRequestResult.value;
-                GetLevelRating(newLevelRatingKey, levelData);
+                GetLevelRatingCount(levelData);
             }
         });
     }
 
-    private void GetLevelRating(string levelRatingKey, LevelData levelData)
+    private void GetLevelRatingCount(LevelData levelData)
     {
-        PlayFabController.instance.GetUserData(levelRatingKey,
+        PlayFabController.instance.GetUserReadOnlyData(levelData.OwnerPlayFabId, levelData.RatingCountKey, (arg) =>
+        {
+            if (arg.response == Response.result)
+            {
+                levelData.RateCount = arg.value;
+                GetLevelRatingVaue(levelData);
+            }
+        });
+    }
+
+    private void GetLevelRatingVaue(LevelData levelData)
+    {
+        PlayFabController.instance.GetUserReadOnlyData(levelData.OwnerPlayFabId, levelData.levelRateKey,
             (levelRatingRequestResult) =>
             {
                 if (levelRatingRequestResult.response == Response.result)
@@ -94,15 +110,9 @@ public class ShowOnlineLevels : MonoBehaviour
     private void GenerateLevelHolder(LevelData levelData)
     {
         GameObject item = Instantiate(listItems, listHolder);
-        item.GetComponent<LoadOnlineLevel>().SetLevelData(levelData.LevelCode, levelData.DesignerName, levelData.Rating, levelData.OwnerPlayFabId);
+        item.GetComponent<LoadOnlineLevel>().SetLevelData(levelData);
         _loadingScreenManager.HideLoading();
     }
 
-    struct LevelData
-    {
-        public string LevelCode;
-        public string DesignerName;
-        public string Rating;
-        public string OwnerPlayFabId;
-    }
+
 }

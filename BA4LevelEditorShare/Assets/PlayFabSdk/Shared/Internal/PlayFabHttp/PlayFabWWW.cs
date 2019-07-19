@@ -33,17 +33,17 @@ namespace PlayFab.Internal
 
         public void SimpleGetCall(string fullUrl, Action<byte[]> successCallback, Action<string> errorCallback)
         {
-            PlayFabHttp.PDFInstance.StartCoroutine(SimpleCallCoroutine("get", fullUrl, null, successCallback, errorCallback));
+            PlayFabHttp.instance.StartCoroutine(SimpleCallCoroutine("get", fullUrl, null, successCallback, errorCallback));
         }
 
         public void SimplePutCall(string fullUrl, byte[] payload, Action<byte[]> successCallback, Action<string> errorCallback)
         {
-            PlayFabHttp.PDFInstance.StartCoroutine(SimpleCallCoroutine("put", fullUrl, payload, successCallback, errorCallback));
+            PlayFabHttp.instance.StartCoroutine(SimpleCallCoroutine("put", fullUrl, payload, successCallback, errorCallback));
         }
 
         public void SimplePostCall(string fullUrl, byte[] payload, Action<byte[]> successCallback, Action<string> errorCallback)
         {
-            PlayFabHttp.PDFInstance.StartCoroutine(SimpleCallCoroutine("post", fullUrl, payload, successCallback, errorCallback));
+            PlayFabHttp.instance.StartCoroutine(SimpleCallCoroutine("post", fullUrl, payload, successCallback, errorCallback));
         }
 
         private static IEnumerator SimpleCallCoroutine(string method, string fullUrl, byte[] payload, Action<byte[]> successCallback, Action<string> errorCallback)
@@ -144,7 +144,7 @@ namespace PlayFab.Internal
                         reqContainer.ApiResult.Request = reqContainer.ApiRequest;
                         reqContainer.ApiResult.CustomData = reqContainer.CustomData;
 
-                        PlayFabHttp.PDFInstance.OnPlayFabApiResult(reqContainer);
+                        PlayFabHttp.instance.OnPlayFabApiResult(reqContainer);
 #if !DISABLE_PLAYFABCLIENT_API
                         PlayFabDeviceUtil.OnPlayFabLogin(reqContainer.ApiResult, reqContainer.settings, reqContainer.instanceApi);
 #endif
@@ -204,7 +204,7 @@ namespace PlayFab.Internal
                 }
             };
 
-            PlayFabHttp.PDFInstance.StartCoroutine(PostPlayFabApiCall(www, wwwSuccessCallback, wwwErrorCallback));
+            PlayFabHttp.instance.StartCoroutine(PostPlayFabApiCall(www, wwwSuccessCallback, wwwErrorCallback));
         }
 
         private IEnumerator PostPlayFabApiCall(WWW www, Action<string> wwwSuccessCallback, Action<string> wwwErrorCallback)

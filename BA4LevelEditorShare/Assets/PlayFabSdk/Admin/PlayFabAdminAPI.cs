@@ -25,7 +25,7 @@ namespace PlayFab
         }
 
         /// <summary>
-        /// Abort an ongoing task PDFInstance.
+        /// Abort an ongoing task instance.
         /// </summary>
         public static void AbortTaskInstance(AbortTaskInstanceRequest request, Action<EmptyResponse> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
         {
@@ -283,7 +283,7 @@ namespace PlayFab
         }
 
         /// <summary>
-        /// Get information about a ActionsOnPlayersInSegment task PDFInstance.
+        /// Get information about a ActionsOnPlayersInSegment task instance.
         /// </summary>
         public static void GetActionsOnPlayersInSegmentTaskInstance(GetTaskInstanceRequest request, Action<GetActionsOnPlayersInSegmentTaskInstanceResult> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
         {
@@ -328,7 +328,7 @@ namespace PlayFab
         }
 
         /// <summary>
-        /// Get detail information about a CloudScript task PDFInstance.
+        /// Get detail information about a CloudScript task instance.
         /// </summary>
         public static void GetCloudScriptTaskInstance(GetTaskInstanceRequest request, Action<GetCloudScriptTaskInstanceResult> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
         {

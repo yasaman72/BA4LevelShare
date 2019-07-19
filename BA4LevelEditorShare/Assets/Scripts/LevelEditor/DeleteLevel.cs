@@ -5,6 +5,7 @@ using UnityEngine;
 public class DeleteLevel : MonoBehaviour
 {
     [SerializeField] private GameObject m_levelGrid;
+
     [SerializeField] private SetLogText m_setLogText;
 
 
@@ -15,5 +16,8 @@ public class DeleteLevel : MonoBehaviour
             child.GetComponent<ToggleTile>().SetStartingTile();
             m_setLogText.ShowMessage("Deleted the level.");
         }
+
+        CurrentLevelData.instance.thisLevelData = new LevelData();
+        CurrentLevelData.instance.ChangeRateButtonVisibility(false);
     }
 }

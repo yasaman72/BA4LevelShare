@@ -453,21 +453,22 @@ namespace PlayFab
         EntityAPIKeyOrSecretInvalid = 1449,
         EconomyServiceUnavailable = 1450,
         EconomyServiceInternalError = 1451,
-        KustoProxyQueryRateLimitExceeded = 1455,
-        EntityAPIKeyCreationDisabledForEntity = 1456,
-        StudioCreationRateLimited = 1457,
-        StudioCreationInProgress = 1458,
-        DuplicateStudioName = 1459,
-        StudioNotFound = 1460,
-        StudioDeletionInProgress = 1461,
-        StudioDeactivated = 1462,
+        QueryRateLimitExceeded = 1452,
+        EntityAPIKeyCreationDisabledForEntity = 1453,
+        StudioCreationRateLimited = 1456,
+        StudioCreationInProgress = 1457,
+        DuplicateStudioName = 1458,
+        StudioNotFound = 1459,
+        StudioDeleted = 1460,
+        StudioDeactivated = 1461,
+        StudioActivated = 1462,
         TitleCreationRateLimited = 1463,
         TitleCreationInProgress = 1464,
         DuplicateTitleName = 1465,
-        TitleNotFound = 1466,
-        TitleDeletionInProgress = 1467,
+        TitleActivationRateLimited = 1466,
+        TitleActivationInProgress = 1467,
         TitleDeactivated = 1468,
-        TitleAlreadyActivated = 1469,
+        TitleActivated = 1469,
         CloudScriptAzureFunctionsExecutionTimeLimitExceeded = 1470,
         CloudScriptAzureFunctionsArgumentSizeExceeded = 1471,
         CloudScriptAzureFunctionsReturnSizeExceeded = 1472,
@@ -507,6 +508,7 @@ namespace PlayFab
         CatalogFeatureDisabled = 4009,
         CatalogConfigInvalid = 4010,
         CatalogUnauthorized = 4011,
+        CatalogItemTypeInvalid = 4012,
         ExportInvalidStatusUpdate = 5000,
         ExportInvalidPrefix = 5001,
         ExportBlobContainerDoesNotExist = 5002,
@@ -523,7 +525,9 @@ namespace PlayFab
         ExportUnknownError = 5013,
         ExportCantEditPendingExport = 5014,
         ExportLimitExports = 5015,
-        ExportLimitEvents = 5016
+        ExportLimitEvents = 5016,
+        TitleNotEnabledForParty = 6000,
+        PartyVersionNotFound = 6001
     }
 
     public class PlayFabError
@@ -551,12 +555,25 @@ namespace PlayFab
 
         [ThreadStatic]
         private static StringBuilder _tempSb;
+         /// <summary>
+        /// This converts the PlayFabError into a human readable string describing the error.
+        /// If error is not found, it will return the http code, status, and error
+        /// </summary>
+        /// <returns>A description of the error that we just incur.</returns>
         public string GenerateErrorReport()
         {
             if (_tempSb == null)
                 _tempSb = new StringBuilder();
             _tempSb.Length = 0;
-            _tempSb.Append(ApiEndpoint).Append(": ").Append(ErrorMessage);
+            if (String.IsNullOrEmpty(ErrorMessage))
+            {
+                _tempSb.Append(ApiEndpoint).Append(": ").Append("Http Code: ").Append(HttpCode.ToString()).Append("\nHttp Status: ").Append(HttpStatus).Append("\nError: ").Append(Error.ToString()).Append("\n");
+            }
+            else
+            {
+                _tempSb.Append(ApiEndpoint).Append(": ").Append(ErrorMessage);
+            }
+
             if (ErrorDetails != null)
                 foreach (var pair in ErrorDetails)
                     foreach (var msg in pair.Value)
@@ -576,6 +593,7 @@ namespace PlayFab
 
     public enum PlayFabExceptionCode
     {
+        AuthContextRequired,
         DeveloperKeyNotSet,
         EntityTokenNotSet,
         NotLoggedIn,

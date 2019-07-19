@@ -13,7 +13,6 @@ public class PlayFabController : MonoBehaviour
 
     public static PlayFabController instance { get; private set; }
 
-
     void Awake()
     {
         if (instance == null)
@@ -85,8 +84,6 @@ public class PlayFabController : MonoBehaviour
         }
     }
 
-
-
     // cloud script execution
     public void StartCloudUpdatePlayerStats()
     {
@@ -127,7 +124,7 @@ public class PlayFabController : MonoBehaviour
     {
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
-            Data = new Dictionary<string, string>() { { key, value } }
+            Data = new Dictionary<string, string>() { { key, value } },
         },
             result =>
             {
@@ -135,12 +132,12 @@ public class PlayFabController : MonoBehaviour
             },
             error =>
             {
-                Debug.Log("Got error setting user data Ancestor to Arthur");
+                Debug.Log("Got error setting user data");
                 Debug.Log(error.GenerateErrorReport());
             });
     }
 
-    public void GetUserData(string key, Action<GetUserDataResultHolder> OnFinished)
+    public void GetUserData(string key, Action<GetUserDataResultHolder> OnFinished = null)
     {
         GetUserDataResultHolder finalResultHolder = new GetUserDataResultHolder();
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
@@ -161,19 +158,19 @@ public class PlayFabController : MonoBehaviour
                 finalResultHolder.response = Response.result;
                 finalResultHolder.value = result.Data[key].Value;
             }
-            OnFinished.Invoke(finalResultHolder);
+            OnFinished?.Invoke(finalResultHolder);
 
         }, (error) =>
         {
             Debug.Log("Got error retrieving user data: ");
             Debug.Log(error.GenerateErrorReport());
             finalResultHolder.response = Response.Error;
-            OnFinished.Invoke(finalResultHolder);
+            OnFinished?.Invoke(finalResultHolder);
         });
 
     }
 
-    public void GetUserData(string key, Action<GetUserDataResultHolder> OnFinished, string playerPlayFabID)
+    public void GetUserData(string key, string playerPlayFabID, Action<GetUserDataResultHolder> OnFinished = null)
     {
         GetUserDataResultHolder finalResultHolder = new GetUserDataResultHolder();
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
@@ -194,21 +191,82 @@ public class PlayFabController : MonoBehaviour
                 finalResultHolder.response = Response.result;
                 finalResultHolder.value = result.Data[key].Value;
             }
-            OnFinished.Invoke(finalResultHolder);
+            OnFinished?.Invoke(finalResultHolder);
 
         }, (error) =>
         {
             Debug.Log("Got error retrieving " + playerPlayFabID + " user data: ");
             Debug.Log(error.GenerateErrorReport());
             finalResultHolder.response = Response.Error;
-            OnFinished.Invoke(finalResultHolder);
+            OnFinished?.Invoke(finalResultHolder);
         });
 
     }
 
+    #region ReadOnlyPlayerData
+
+    public void UpdateUserReadOnlyData(string playFabId, string key, string value, Action OnFinished = null)
+    {
+        PlayFabServerAPI.UpdateUserReadOnlyData(new PlayFab.ServerModels.UpdateUserDataRequest()
+        {
+            PlayFabId = playFabId,
+            Data = new Dictionary<string, string>() {
+                    {key, value}
+                },
+            Permission = PlayFab.ServerModels.UserDataPermission.Public
+        },
+            result =>
+            {
+                Debug.Log("Set read-only user data successful");
+                OnFinished?.Invoke();
+            },
+            error =>
+            {
+                Debug.Log("Got error updating read-only user data:");
+                Debug.Log(error.GenerateErrorReport());
+                OnFinished?.Invoke();
+            });
+    }
+
+    public void GetUserReadOnlyData(string playFabId, string key, Action<GetUserDataResultHolder> onFinished = null)
+    {
+        GetUserDataResultHolder finalResultHolder = new GetUserDataResultHolder();
+
+        PlayFabServerAPI.GetUserReadOnlyData(new PlayFab.ServerModels.GetUserDataRequest()
+        {
+            PlayFabId = playFabId,
+            Keys = new List<string>() { key },
+        },
+            result =>
+            {
+                if (result.Data == null || !result.Data.ContainsKey(key))
+                {
+                    Debug.Log("No " + key);
+                    finalResultHolder.response = Response.noKey;
+                }
+                else
+                {
+                    Debug.Log(key + ": " + result.Data[key].Value);
+                    finalResultHolder.response = Response.result;
+                    finalResultHolder.value = result.Data[key].Value;
+                }
+
+                onFinished?.Invoke(finalResultHolder);
+            },
+            error =>
+            {
+                Debug.Log("Got error getting read-only user data:");
+                Debug.Log(error.GenerateErrorReport());
+                finalResultHolder.response = Response.Error;
+                onFinished?.Invoke(finalResultHolder);
+            });
+    }
+    #endregion
+
+
     #region Leaderboard
 
-    public void GetLeaderboardDate(string statisticName, Action<List<PlayerLeaderboardEntry>> OnFinished)
+    public void GetLeaderboardDate(string statisticName, Action<List<PlayerLeaderboardEntry>> OnFinished = null)
     {
         PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest()
         {
@@ -219,18 +277,17 @@ public class PlayFabController : MonoBehaviour
         {
             Debug.Log("Getting leaderboard");
 
-            OnFinished.Invoke(result.Leaderboard);
+            OnFinished?.Invoke(result.Leaderboard);
 
         }, (error) =>
         {
             Debug.Log("Got error retrieving leaderboard: ");
             Debug.Log(error.GenerateErrorReport());
-            OnFinished.Invoke(null);
+            OnFinished?.Invoke(null);
         });
     }
 
     #endregion
-
 
     #region UpdateDisplayName
 
@@ -239,11 +296,11 @@ public class PlayFabController : MonoBehaviour
         PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest()
         {
             DisplayName = displayName
-        }, 
+        },
             result =>
         {
             Debug.Log("Updated display name");
-        }, 
+        },
         (error) =>
         {
             Debug.Log("Got error updating display name: ");

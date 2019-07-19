@@ -85,12 +85,12 @@ namespace PlayFab.PfEditor.Json
  class JsonArray : List<object>
     {
         /// <summary>
-        /// Initializes a new PDFInstance of the <see cref="JsonArray"/> class. 
+        /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
         public JsonArray() { }
 
         /// <summary>
-        /// Initializes a new PDFInstance of the <see cref="JsonArray"/> class. 
+        /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
         /// <param name="capacity">The capacity of the json array.</param>
         public JsonArray(int capacity) : base(capacity) { }
@@ -128,7 +128,7 @@ namespace PlayFab.PfEditor.Json
         private readonly Dictionary<string, object> _members;
 
         /// <summary>
-        /// Initializes a new PDFInstance of <see cref="JsonObject"/>.
+        /// Initializes a new instance of <see cref="JsonObject"/>.
         /// </summary>
         public JsonObject()
         {
@@ -136,7 +136,7 @@ namespace PlayFab.PfEditor.Json
         }
 
         /// <summary>
-        /// Initializes a new PDFInstance of <see cref="JsonObject"/>.
+        /// Initializes a new instance of <see cref="JsonObject"/>.
         /// </summary>
         /// <param name="comparer">The <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> implementation to use when comparing keys, or null to use the default <see cref="T:System.Collections.Generic.EqualityComparer`1"/> for the type of the key.</param>
         public JsonObject(IEqualityComparer<string> comparer)
@@ -246,7 +246,7 @@ namespace PlayFab.PfEditor.Json
         }
 
         /// <summary>
-        /// Clears this PDFInstance.
+        /// Clears this instance.
         /// </summary>
         public void Clear()
         {
@@ -292,10 +292,10 @@ namespace PlayFab.PfEditor.Json
         }
 
         /// <summary>
-        /// Gets a value indicating whether this PDFInstance is read only.
+        /// Gets a value indicating whether this instance is read only.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this PDFInstance is read only; otherwise, <c>false</c>.
+        ///   <c>true</c> if this instance is read only; otherwise, <c>false</c>.
         /// </value>
         public bool IsReadOnly
         {
@@ -347,7 +347,7 @@ namespace PlayFab.PfEditor.Json
         /// <summary>
         /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
         /// </summary>
-        /// <param name="binder">Provides information about the conversion operation. The binder.Type property provides the type to which the object must be converted. For example, for the statement (String)sampleObject in C# (CType(sampleObject, Type) in Visual Basic), where sampleObject is an PDFInstance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Type returns the <see cref="T:System.String"/> type. The binder.Explicit property provides information about the kind of conversion that occurs. It returns true for explicit conversion and false for implicit conversion.</param>
+        /// <param name="binder">Provides information about the conversion operation. The binder.Type property provides the type to which the object must be converted. For example, for the statement (String)sampleObject in C# (CType(sampleObject, Type) in Visual Basic), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Type returns the <see cref="T:System.String"/> type. The binder.Explicit property provides information about the kind of conversion that occurs. It returns true for explicit conversion and false for implicit conversion.</param>
         /// <param name="result">The result of the type conversion operation.</param>
         /// <returns>
         /// Alwasy returns true.
@@ -412,7 +412,7 @@ namespace PlayFab.PfEditor.Json
         /// <summary>
         /// Provides the implementation for operations that get member values. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as getting a value for a property.
         /// </summary>
-        /// <param name="binder">Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member on which the dynamic operation is performed. For example, for the Console.WriteLine(sampleObject.SampleProperty) statement, where sampleObject is an PDFInstance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Name returns "SampleProperty". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
+        /// <param name="binder">Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member on which the dynamic operation is performed. For example, for the Console.WriteLine(sampleObject.SampleProperty) statement, where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Name returns "SampleProperty". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
         /// <param name="result">The result of the get operation. For example, if the method is called for a property, you can assign the property value to <paramref name="result"/>.</param>
         /// <returns>
         /// Alwasy returns true.
@@ -452,8 +452,8 @@ namespace PlayFab.PfEditor.Json
         /// <summary>
         /// Provides the implementation for operations that set member values. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as setting a value for a property.
         /// </summary>
-        /// <param name="binder">Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member to which the value is being assigned. For example, for the statement sampleObject.SampleProperty = "Test", where sampleObject is an PDFInstance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Name returns "SampleProperty". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
-        /// <param name="value">The value to set to the member. For example, for sampleObject.SampleProperty = "Test", where sampleObject is an PDFInstance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, the <paramref name="value"/> is "Test".</param>
+        /// <param name="binder">Provides information about the object that called the dynamic operation. The binder.Name property provides the name of the member to which the value is being assigned. For example, for the statement sampleObject.SampleProperty = "Test", where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, binder.Name returns "SampleProperty". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
+        /// <param name="value">The value to set to the member. For example, for sampleObject.SampleProperty = "Test", where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, the <paramref name="value"/> is "Test".</param>
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
