@@ -896,5 +896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d046a6756a4faba4f9d1237f366f18f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_levelList: {fileID: 0}
+  m_levelList: {fileID: 7476358530073895879}
   m_loadLevel: {fileID: 0}
+  m_levelCodeText: {fileID: 1438151728301934601}
+  m_levelDesignerText: {fileID: 5957063117286707724}
+  m_levelRatingText: {fileID: 754357589733834385}

@@ -30,18 +30,26 @@ public class ShareLevel : MonoBehaviour
         string newLevelKey = "sharedLevelNo" + (sharedLevelsAmount + 1);
         string newLevelValue = SaveLevel.instance.GetCurrentLevelCode();
 
+        // Set the key for the new shared level and its code as value
         PlayFabController.instance.SetUserData(newLevelKey, newLevelValue);
-        //increment the SharedLevelAmountKey value by one
+
+        // Increment the SharedLevelAmountKey value by one in players data and in statistics
         PlayFabController.instance.SetUserData(SharedLevelAmountKey, (sharedLevelsAmount + 1).ToString());
+        PlayFabController.instance.StartCloudUpdateSharedLevelsAmount(sharedLevelsAmount + 1);
+
+        // Save another key/value for the rating of the level with the initial value of zero
+        string newLevelRatingKey = "sharedLevelNo" + (sharedLevelsAmount + 1) + "Rating";
+        PlayFabController.instance.SetUserData(newLevelRatingKey, "0");
     }
-    
-    // for debugging
+
+    #region Loading For Debugging
+
     public void LoadLastSharedLevel()
     {
         _afterGettingLevelAmountDelegate = OnLoad;
         // Get shared level amount
         PlayFabController.instance.GetUserData(SharedLevelAmountKey, OnFinishedGettingLevelAmount);
-        }
+    }
 
     private void OnLoad()
     {
@@ -62,9 +70,7 @@ public class ShareLevel : MonoBehaviour
                 sharedLevelsAmount = -1;
                 break;
             case Response.noKey:
-                PlayFabController.instance.SetUserData(SharedLevelAmountKey, "0");
                 sharedLevelsAmount = 0;
-
                 break;
             case Response.result:
                 sharedLevelsAmount = int.Parse(levelCountRequestResult.value);
@@ -89,4 +95,7 @@ public class ShareLevel : MonoBehaviour
                 break;
         }
     }
+
+
+    #endregion
 }

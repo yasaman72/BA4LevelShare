@@ -46,6 +46,19 @@ public class PlayFabController : MonoBehaviour
             error => { Debug.LogError(error.GenerateErrorReport()); });
     }
 
+    public void SetStatistics(string statisticName, int value)
+    {
+        PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+        {
+            Statistics = new List<StatisticUpdate>
+                {
+                    new StatisticUpdate {StatisticName = statisticName, Value = value}
+                }
+        },
+            result => { Debug.Log("User's statistic updated! statistic: " + statisticName + " value: " + value); },
+            error => { Debug.LogError(error.GenerateErrorReport()); });
+    }
+
     public void GetStatistics()
     {
         PlayFabClientAPI.GetPlayerStatistics(
@@ -81,6 +94,16 @@ public class PlayFabController : MonoBehaviour
         {
             FunctionName = "updatePlayerStats", // Arbitrary function name (must exist in your uploaded cloud.js file)
             FunctionParameter = new { level = playerLevel }, // The parameter provided to your function
+            GeneratePlayStreamEvent = true, // Optional - Shows this event in PlayStream
+        }, OnCloudUpdatePlayerStats, OnErrorShared);
+    }
+
+    public void StartCloudUpdateSharedLevelsAmount(int value)
+    {
+        PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+        {
+            FunctionName = "updateSharedLevelsAmount", // Arbitrary function name (must exist in your uploaded cloud.js file)
+            FunctionParameter = new { newValue = value }, // The parameter provided to your function
             GeneratePlayStreamEvent = true, // Optional - Shows this event in PlayStream
         }, OnCloudUpdatePlayerStats, OnErrorShared);
     }
@@ -149,6 +172,87 @@ public class PlayFabController : MonoBehaviour
         });
 
     }
+
+    public void GetUserData(string key, Action<GetUserDataResultHolder> OnFinished, string playerPlayFabID)
+    {
+        GetUserDataResultHolder finalResultHolder = new GetUserDataResultHolder();
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        {
+            PlayFabId = playerPlayFabID,
+            Keys = null
+        }, result =>
+        {
+            Debug.Log("Got user " + playerPlayFabID + " data:");
+            if (result.Data == null || !result.Data.ContainsKey(key))
+            {
+                Debug.Log("No key for " + key + "for user " + playerPlayFabID);
+                finalResultHolder.response = Response.noKey;
+            }
+            else
+            {
+                //Debug.Log("key: " + result.Data[key].Value);
+                finalResultHolder.response = Response.result;
+                finalResultHolder.value = result.Data[key].Value;
+            }
+            OnFinished.Invoke(finalResultHolder);
+
+        }, (error) =>
+        {
+            Debug.Log("Got error retrieving " + playerPlayFabID + " user data: ");
+            Debug.Log(error.GenerateErrorReport());
+            finalResultHolder.response = Response.Error;
+            OnFinished.Invoke(finalResultHolder);
+        });
+
+    }
+
+    #region Leaderboard
+
+    public void GetLeaderboardDate(string statisticName, Action<List<PlayerLeaderboardEntry>> OnFinished)
+    {
+        PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest()
+        {
+            MaxResultsCount = 7,
+            StartPosition = 0,
+            StatisticName = statisticName
+        }, result =>
+        {
+            Debug.Log("Getting leaderboard");
+
+            OnFinished.Invoke(result.Leaderboard);
+
+        }, (error) =>
+        {
+            Debug.Log("Got error retrieving leaderboard: ");
+            Debug.Log(error.GenerateErrorReport());
+            OnFinished.Invoke(null);
+        });
+    }
+
+    #endregion
+
+
+    #region UpdateDisplayName
+
+    public void UpdateDisplayName(string displayName)
+    {
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest()
+        {
+            DisplayName = displayName
+        }, 
+            result =>
+        {
+            Debug.Log("Updated display name");
+        }, 
+        (error) =>
+        {
+            Debug.Log("Got error updating display name: ");
+            Debug.Log(error.GenerateErrorReport());
+
+        });
+    }
+
+    #endregion
 }
 
 public struct GetUserDataResultHolder
