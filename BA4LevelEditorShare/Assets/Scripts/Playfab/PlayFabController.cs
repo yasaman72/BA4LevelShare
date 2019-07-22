@@ -266,42 +266,6 @@ public class PlayFabController : MonoBehaviour
 
 
     #region Leaderboard
-    //private static async Task DoReadLeaderboard()
-    //{
-    //    // Get Leaderboard Request
-    //    var result = await PlayFabClientAPI.GetLeaderboardAsync(new GetLeaderboardRequest()
-    //    {
-    //        // Specify your statistic name here
-    //        StatisticName = "TestScore",
-    //        // Override Player Profile View Constraints and fetch player DisplayName and AvatarUrl
-    //        ProfileConstraints = new PlayerProfileViewConstraints()
-    //        {
-    //            ShowDisplayName = true,
-    //            ShowAvatarUrl = true
-    //        }
-    //    });
-
-    //    // Start printing the leaderboard
-    //    Console.WriteLine("=== LEADERBOARD ===");
-
-    //    if (result.Error != null)
-    //    {
-    //        // Handle error if any
-    //        //Console.WriteLine(result.Error.GenerateErrorReport());
-    //    }
-    //    else
-    //    {
-    //        // Traverse the leaderboard list
-    //        foreach (var entry in result.Result.Leaderboard)
-    //        {
-    //            // Print regular leaderboard entry information
-    //            Console.WriteLine($"{entry.Position + 1} {entry.PlayFabId} {entry.StatValue}");
-
-    //            // Additionally print display name and avatar url that comes from player profile
-    //            Console.WriteLine($"    {entry.Profile.DisplayName} | {entry.Profile.AvatarUrl}");
-    //        }
-    //    }
-    //}
 
     public void GetLeaderboardDate(string statisticName, Action<List<PlayerLeaderboardEntry>> OnFinished = null)
     {
