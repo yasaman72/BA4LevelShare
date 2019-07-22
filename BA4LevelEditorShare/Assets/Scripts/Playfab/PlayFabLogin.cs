@@ -2,6 +2,7 @@
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayFabLogin : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class PlayFabLogin : MonoBehaviour
     private string userEmail;
     private string userPassword;
     private string username;
+
+    public void LogOut()
+    {
+        PlayFabClientAPI.ForgetAllCredentials();
+        PlayerPrefs.DeleteAll();
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public void Start()
     {
@@ -80,7 +89,7 @@ public class PlayFabLogin : MonoBehaviour
 
         loginPanel.SetActive(false);
         // storing current player playfab ID
-        PlayFabController.instance.cuurrentPlayerPlayfabID = result.PlayFabId;
+        PlayFabController.instance.currentPlayerPlayfabID = result.PlayFabId;
 
         PlayFabController.instance.GetStatistics();
     }
@@ -99,7 +108,7 @@ public class PlayFabLogin : MonoBehaviour
         loginPanel.SetActive(false);
 
         // storing current player playfab ID
-        PlayFabController.instance.cuurrentPlayerPlayfabID = result.PlayFabId;
+        PlayFabController.instance.currentPlayerPlayfabID = result.PlayFabId;
 
         PlayFabController.instance.GetStatistics();
     }
@@ -130,7 +139,7 @@ public class PlayFabLogin : MonoBehaviour
         PlayerPrefs.SetString("EMAIL", userEmail);
         PlayerPrefs.SetString("PASSWORD", userPassword);
         // storing current player playfab ID
-        PlayFabController.instance.cuurrentPlayerPlayfabID = result.PlayFabId;
+        PlayFabController.instance.currentPlayerPlayfabID = result.PlayFabId;
 
         UpdateUserDisplayName();
 

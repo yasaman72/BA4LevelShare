@@ -18,7 +18,7 @@ public class LoadOnlineLevel : MonoBehaviour
     {
         CurrentLevelData.instance.ChangeRateButtonVisibility(true);
         CurrentLevelData.instance.thisLevelData = m_levelData;
-        Debug.Log("m_levelCode: " + m_levelCode);
+        Debug.Log("m_levelCode: " + m_levelData.LevelCode);
 
         GameObject.FindGameObjectWithTag("LevelList").SetActive(false);
 

@@ -9,6 +9,8 @@ public class ShareLevel : MonoBehaviour
 {
     string SharedLevelAmountKey = "SharedLevelAmount";
     int sharedLevelsAmount;
+    public  SetLogText m_setlogText;
+    public LoadingScreenManager m_loadingManager;
 
 
     delegate void AfterGettingLevelAmountDelegate();
@@ -19,7 +21,7 @@ public class ShareLevel : MonoBehaviour
         // first get the amount of created levels by this user. The number is then used for the SharedLevelAmountKey of the saving level
         _afterGettingLevelAmountDelegate = OnShare;
         // Get shared level amount
-        PlayFabController.instance.GetUserData(SharedLevelAmountKey, OnFinishedGettingLevelAmount);
+        PlayFabController.instance.GetUserReadOnlyData(PlayFabController.instance.currentPlayerPlayfabID,SharedLevelAmountKey, OnFinishedGettingLevelAmount);
     }
 
     private void OnShare()
@@ -27,23 +29,30 @@ public class ShareLevel : MonoBehaviour
         if (sharedLevelsAmount == -1)
             return;
 
+        m_loadingManager.ShowLoading();
+
         string newLevelKey = "sharedLevelNo" + (sharedLevelsAmount + 1);
         string newLevelValue = SaveLevel.instance.GetCurrentLevelCode();
 
         // Set the key for the new shared level and its code as value
-        PlayFabController.instance.SetUserData(newLevelKey, newLevelValue);
+        PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.currentPlayerPlayfabID,newLevelKey, newLevelValue);
 
         // Increment the SharedLevelAmountKey value by one in players data and in statistics
-        PlayFabController.instance.SetUserData(SharedLevelAmountKey, (sharedLevelsAmount + 1).ToString());
+        PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.currentPlayerPlayfabID,SharedLevelAmountKey, (sharedLevelsAmount + 1).ToString());
         PlayFabController.instance.StartCloudUpdateSharedLevelsAmount(sharedLevelsAmount + 1);
 
         // Save another key/value for the rating of the level with the initial value of zero
         string newLevelRatingKey = "sharedLevelNo" + (sharedLevelsAmount + 1) + "Rating";
-        PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.cuurrentPlayerPlayfabID, newLevelRatingKey, "0", 
+        PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.currentPlayerPlayfabID, newLevelRatingKey, "0", 
             () =>
             {
                 string newLevelRatingCountKey = "sharedLevelNo" + (sharedLevelsAmount + 1) + "RatingCountKey";
-                PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.cuurrentPlayerPlayfabID, newLevelRatingCountKey, "0");
+                PlayFabController.instance.UpdateUserReadOnlyData(PlayFabController.instance.currentPlayerPlayfabID, newLevelRatingCountKey, "0",
+                    () =>
+                    {
+                        m_setlogText.ShowMessage("Shared Level");
+                        m_loadingManager.HideLoading();
+                    });
             });
     }
 
@@ -53,7 +62,7 @@ public class ShareLevel : MonoBehaviour
     {
         _afterGettingLevelAmountDelegate = OnLoad;
         // Get shared level amount
-        PlayFabController.instance.GetUserData(SharedLevelAmountKey, OnFinishedGettingLevelAmount);
+        PlayFabController.instance.GetUserReadOnlyData(PlayFabController.instance.currentPlayerPlayfabID,SharedLevelAmountKey, OnFinishedGettingLevelAmount);
     }
 
     private void OnLoad()

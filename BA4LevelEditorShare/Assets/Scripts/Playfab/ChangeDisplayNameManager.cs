@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ChangeDisplayNameManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI m_inputName;
+    [SerializeField] private TMP_InputField m_inputName;
 
     public void ChangeDisplayName()
     {

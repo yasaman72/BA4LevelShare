@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -9,7 +10,7 @@ using PlayFab.Json;
 public class PlayFabController : MonoBehaviour
 {
     public int playerLevel;
-    public string cuurrentPlayerPlayfabID;
+    public string currentPlayerPlayfabID;
 
     public static PlayFabController instance { get; private set; }
 
@@ -142,7 +143,7 @@ public class PlayFabController : MonoBehaviour
         GetUserDataResultHolder finalResultHolder = new GetUserDataResultHolder();
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
         {
-            PlayFabId = cuurrentPlayerPlayfabID,
+            PlayFabId = currentPlayerPlayfabID,
             Keys = null
         }, result =>
         {
@@ -182,7 +183,7 @@ public class PlayFabController : MonoBehaviour
             Debug.Log("Got user " + playerPlayFabID + " data:");
             if (result.Data == null || !result.Data.ContainsKey(key))
             {
-                Debug.Log("No key for " + key + "for user " + playerPlayFabID);
+                Debug.Log("No key for " + key + " for user " + playerPlayFabID);
                 finalResultHolder.response = Response.noKey;
             }
             else
@@ -265,6 +266,42 @@ public class PlayFabController : MonoBehaviour
 
 
     #region Leaderboard
+    //private static async Task DoReadLeaderboard()
+    //{
+    //    // Get Leaderboard Request
+    //    var result = await PlayFabClientAPI.GetLeaderboardAsync(new GetLeaderboardRequest()
+    //    {
+    //        // Specify your statistic name here
+    //        StatisticName = "TestScore",
+    //        // Override Player Profile View Constraints and fetch player DisplayName and AvatarUrl
+    //        ProfileConstraints = new PlayerProfileViewConstraints()
+    //        {
+    //            ShowDisplayName = true,
+    //            ShowAvatarUrl = true
+    //        }
+    //    });
+
+    //    // Start printing the leaderboard
+    //    Console.WriteLine("=== LEADERBOARD ===");
+
+    //    if (result.Error != null)
+    //    {
+    //        // Handle error if any
+    //        //Console.WriteLine(result.Error.GenerateErrorReport());
+    //    }
+    //    else
+    //    {
+    //        // Traverse the leaderboard list
+    //        foreach (var entry in result.Result.Leaderboard)
+    //        {
+    //            // Print regular leaderboard entry information
+    //            Console.WriteLine($"{entry.Position + 1} {entry.PlayFabId} {entry.StatValue}");
+
+    //            // Additionally print display name and avatar url that comes from player profile
+    //            Console.WriteLine($"    {entry.Profile.DisplayName} | {entry.Profile.AvatarUrl}");
+    //        }
+    //    }
+    //}
 
     public void GetLeaderboardDate(string statisticName, Action<List<PlayerLeaderboardEntry>> OnFinished = null)
     {

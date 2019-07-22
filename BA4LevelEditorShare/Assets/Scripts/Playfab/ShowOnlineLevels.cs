@@ -30,8 +30,8 @@ public class ShowOnlineLevels : MonoBehaviour
         foreach (var entry in playersEntry)
         {
             _loadingScreenManager.ShowLoading();
-            PlayFabController.instance.GetUserData(SharedLevelAmountKey
-                , entry.PlayFabId,
+            PlayFabController.instance.GetUserReadOnlyData(  entry.PlayFabId, SharedLevelAmountKey
+                ,
                 (levelCountRequestResult) =>
                 {
                     int sharedLevelsAmount = 0;
@@ -71,7 +71,7 @@ public class ShowOnlineLevels : MonoBehaviour
 
 
         Debug.Log("random level index: " + randomLevelIndex);
-        PlayFabController.instance.GetUserData(levelData.levelKey,
+        PlayFabController.instance.GetUserReadOnlyData(levelData.OwnerPlayFabId,levelData.levelKey,
             (levelRequestResult) =>
         {
             if (levelRequestResult.response == Response.result)
